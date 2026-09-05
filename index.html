@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>飯田橋・水道橋・秋葉原・神田ホテルガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --surface:#ffffff;
+    --surface-2:#f3f6f8;
+    --band:#e2e7ec;
+    --ink:#28323c;
+    --ink-soft:#5d6b78;
+    --ink-faint:#8d98a4;
+    --line:#e2e7eb;
+    --heading:#1c2e40;
+    --heading-soft:#3a4d5e;
+    --accent:#5b9bd5;
+    --accent-tint:#eaf3fb;
+    --accent-strong:#3f7ab0;
+    --slate-tint:#eef1f4;
+    --focus:#3f7ab0;
+    --shadow: 0 1px 2px rgba(20,32,44,0.05);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Noto Sans JP","Hiragino Sans",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.7;
+  }
+  .num{ font-family:"IBM Plex Mono","Noto Sans JP",monospace; font-variant-numeric: tabular-nums; }
+
+  a{ color:inherit; }
+  button{ font-family:inherit; }
+
+  .wrap{ max-width:960px; margin:0 auto; padding:0 20px; }
+
+  .kicker{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .kicker .big{
+    font-family:"Noto Serif JP","Noto Sans JP",serif;
+    font-weight:900;
+    letter-spacing:.03em;
+    color:var(--heading);
+  }
+  .kicker .small{
+    font-size:12.5px;
+    color:var(--accent-strong);
+    font-weight:700;
+    letter-spacing:.06em;
+  }
+  .rule{ position:relative; height:1px; background:var(--line); margin-top:16px; }
+  .rule::before{
+    content:""; position:absolute; left:0; top:-1.5px;
+    width:56px; height:3px; background:var(--accent);
+  }
+
+  .top-band{ height:36px; background:var(--band); }
+
+  .hero{ background:var(--surface); padding:44px 0 34px; border-bottom:1px solid var(--line); text-align:center; }
+  .hero .kicker .big{ font-size:clamp(22px, 4.2vw, 38px); }
+  .hero-eyebrow{
+    font-family:"Noto Sans JP",sans-serif;
+    font-weight:700; font-size:13px; letter-spacing:.4em;
+    color:var(--accent); margin:0 0 14px; padding-left:.4em;
+  }
+  .hero-title{
+    font-family:"Noto Serif JP",serif;
+    font-weight:900; letter-spacing:.05em;
+    color:var(--heading); margin:0;
+    font-size:clamp(26px, 5vw, 44px);
+    text-wrap:balance;
+  }
+  .hero-rule{ width:56px; height:3px; background:var(--accent); margin:20px auto 0; }
+  .hero .lede{
+    margin:22px auto 10px;
+    color:var(--ink-soft);
+    font-size:14.5px;
+    max-width:56ch;
+  }
+  .hero .lede.note{
+    background:var(--accent-tint); color:var(--accent-strong);
+    border-radius:8px; padding:10px 14px; font-size:13px; max-width:56ch;
+    margin-left:auto; margin-right:auto; text-align:left;
+  }
+  .stats{ display:flex; justify-content:center; gap:0; flex-wrap:wrap; margin:24px 0; }
+  .stat{ padding:0 24px; border-right:1px solid var(--line); }
+  .stat:first-child{ padding-left:0; }
+  .stat:last-child{ border-right:0; }
+  .stat b{
+    display:block;
+    font-family:"Noto Serif JP",serif;
+    font-size:26px; font-weight:900; color:var(--heading);
+  }
+  .stat span{ color:var(--ink-faint); font-size:12px; letter-spacing:.02em; }
+  .panel{ text-align:left; }
+
+  .panel{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px;
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  }
+  .search{
+    flex:1 1 240px;
+    display:flex; align-items:center; gap:10px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px 14px;
+    background:var(--bg);
+  }
+  .search svg{ flex:none; color:var(--ink-faint); }
+  .search input{
+    border:0; outline:0; background:transparent; width:100%;
+    font-size:14.5px; color:var(--ink); font-family:inherit;
+  }
+  .search input::placeholder{ color:var(--ink-faint); }
+
+  .chipset{ display:flex; gap:8px; flex-wrap:wrap; }
+  .chip{
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink-soft);
+    font-size:13px; font-weight:700;
+    padding:8px 15px; border-radius:999px;
+    cursor:pointer;
+  }
+  .chip[aria-pressed="true"]{
+    background:var(--accent); border-color:var(--accent); color:#fff;
+  }
+  .chip:focus-visible, .tab:focus-visible, .maps-link:focus-visible, .tel-btn:focus-visible, .search input:focus-visible{
+    outline:2px solid var(--focus); outline-offset:2px;
+  }
+
+  main{ padding:30px 0 60px; }
+
+  .filterbar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
+  .filterbar .label{ font-size:12px; font-weight:700; color:var(--ink-faint); letter-spacing:.06em; }
+
+  .tabs{
+    display:flex; gap:6px; background:var(--surface-2);
+    padding:4px; border-radius:9px; margin-bottom:20px;
+  }
+  .tab{
+    flex:1; border:0; background:transparent; color:var(--ink-soft);
+    font-weight:700; font-size:14px; padding:10px 12px; border-radius:6px; cursor:pointer;
+  }
+  .tab[aria-selected="true"]{ background:var(--accent); color:#fff; }
+
+  .section-head{ margin:36px 0 16px; }
+  .section-head .kicker .big{ font-size:20px; }
+  .section-head .count{
+    font-size:12px; color:var(--ink-faint);
+    background:var(--surface-2); padding:4px 10px; border-radius:999px;
+    margin-left:auto;
+  }
+  .section-head .kicker{ align-items:center; }
+  .section-note{ font-size:12.5px; color:var(--ink-faint); margin:8px 0 0; }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    box-shadow:var(--shadow);
+    margin-bottom:14px;
+    overflow:hidden;
+  }
+  .card-top{ display:grid; grid-template-columns:1.15fr 1fr; gap:0; }
+  @media (max-width:640px){ .card-top{ grid-template-columns:1fr; } }
+
+  .card-main{ padding:18px 20px; border-right:1px solid var(--line); }
+  @media (max-width:640px){ .card-main{ border-right:0; border-bottom:1px solid var(--line); } }
+
+  .card-name-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+  .tag{
+    font-size:10.5px; font-weight:700; letter-spacing:.04em;
+    padding:3px 9px; border-radius:5px;
+  }
+  .tag.love{ background:var(--accent-tint); color:var(--accent-strong); }
+  .tag.rental{ background:#fdf1e4; color:#a3620f; }
+  .tag.biz{ background:var(--slate-tint); color:var(--heading-soft); }
+  .tag.area{ background:var(--surface-2); color:var(--ink-faint); }
+  .card-name-row h3{
+    font-family:"Noto Serif JP","Noto Sans JP",serif;
+    font-weight:700; font-size:17.5px; margin:0; color:var(--ink);
+  }
+
+  .meta-row{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:10px; margin:7px 0;
+    font-size:13.5px; color:var(--ink-soft);
+  }
+  .meta-row .icon-text{ display:flex; align-items:center; gap:7px; }
+  .tel-btn{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--accent); color:#fff; text-decoration:none;
+    font-size:12.5px; font-weight:700; padding:6px 13px; border-radius:999px;
+    white-space:nowrap;
+  }
+  .tel-btn:hover{ background:var(--accent-strong); }
+  .tel-btn.disabled{ background:var(--ink-faint); pointer-events:none; }
+
+  .rate-box{
+    margin-top:12px; border:1px solid var(--line); border-radius:8px;
+    background:var(--surface-2); padding:11px 14px;
+  }
+  .rate-box .rate-head{
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:11.5px; font-weight:700; color:var(--ink-faint); letter-spacing:.04em;
+    margin-bottom:6px;
+  }
+  .rate-line{ display:flex; justify-content:space-between; font-size:14px; padding:3px 0; gap:12px; }
+  .rate-line .label{ color:var(--ink-soft); flex:none; }
+  .rate-line .price{ font-weight:700; text-align:right; color:var(--heading); }
+  .rate-note{ font-size:11.5px; color:var(--ink-faint); margin-top:6px; }
+
+  .card-access{
+    padding:18px 20px; background:var(--surface-2);
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .access-badge{
+    display:flex; align-items:center; gap:8px;
+    background:var(--heading); color:#fff;
+    font-size:12px; font-weight:700;
+    padding:9px 12px; border-radius:7px;
+  }
+  .access-badge .min{ margin-left:auto; font-family:"IBM Plex Mono",monospace; white-space:nowrap; }
+  .addr{ font-size:13px; color:var(--ink-soft); }
+  .maps-link{
+    margin-top:auto;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    background:transparent; color:var(--accent); border:1px solid var(--accent);
+    text-decoration:none; font-size:12.5px; font-weight:700;
+    padding:9px 12px; border-radius:7px;
+  }
+  .maps-link:hover{ background:var(--accent); color:#fff; }
+
+  .empty{ text-align:center; color:var(--ink-faint); padding:40px 0; font-size:14px; display:none; }
+
+  footer{ border-top:1px solid var(--line); padding:26px 0 50px; color:var(--ink-faint); font-size:12px; }
+  footer h4{ color:var(--ink-soft); font-size:12.5px; margin:0 0 8px; }
+  footer ul{ margin:0 0 14px; padding-left:18px; }
+  footer li{ margin-bottom:3px; }
+  footer a{ color:var(--ink-faint); }
+  .disclaimer{
+    background:var(--surface-2); border-left:3px solid var(--accent); color:var(--ink-soft);
+    border-radius:0 8px 8px 0; padding:12px 14px; font-size:12.5px; margin-bottom:18px;
+  }
+
+  @media (prefers-reduced-motion:no-preference){ .card{ transition:box-shadow .15s ease; } }
+</style>
+</head>
+<body>
+
+<div class="top-band"></div>
+<div class="hero">
+  <div class="wrap">
+    <p class="hero-eyebrow">飯田橋・水道橋・秋葉原・神田</p>
+    <h1 class="hero-title">HOTEL GUIDE</h1>
+    <div class="hero-rule"></div>
+    <p class="lede">飯田橋駅を中心に、水道橋駅・秋葉原駅・神田駅周辺で実際に営業しているホテル・レンタルルームをまとめました。料金は目安です。</p>
+    <p class="lede note">※このエリアは大学・官庁・電気街が中心のため、駅前にラブホテルが多いわけではありません。飯田橋は1軒のみ、秋葉原は昭和通り改札口側の神田佐久間町エリアに集中、神田は「レンタルルーム」という別業態が中心です。水道橋の2軒は隣接する湯島・本郷エリアの施設です（駅から徒歩15〜20分、要注意）。</p>
+    <div class="stats">
+      <div class="stat"><b class="num" id="statLove">18</b><span>ラブホテル・レンタルルーム</span></div>
+      <div class="stat"><b class="num" id="statBiz">25</b><span>ビジネスホテル</span></div>
+      <div class="stat"><b class="num" id="statAll">43</b><span>掲載施設数</span></div>
+    </div>
+    <div class="panel">
+      <label class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="text" placeholder="ホテル名・住所で検索…" autocomplete="off">
+      </label>
+      <div class="chipset" id="areaChips">
+        <button class="chip" data-area="all" aria-pressed="true">すべてのエリア</button>
+        <button class="chip" data-area="飯田橋" aria-pressed="false">飯田橋駅</button>
+        <button class="chip" data-area="水道橋" aria-pressed="false">水道橋駅</button>
+        <button class="chip" data-area="秋葉原" aria-pressed="false">秋葉原駅</button>
+        <button class="chip" data-area="神田" aria-pressed="false">神田駅</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="filterbar"><span class="label">カテゴリ</span></div>
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tabAll" role="tab" aria-selected="true" data-cat="all">すべて表示</button>
+    <button class="tab" id="tabLove" role="tab" aria-selected="false" data-cat="love">ラブホテル・レンタルルーム</button>
+    <button class="tab" id="tabBiz" role="tab" aria-selected="false" data-cat="biz">ビジネスホテル系</button>
+  </div>
+
+  <section id="loveSection">
+    <div class="section-head">
+      <div class="kicker">
+        <span class="big">LOVE HOTEL &amp; RENTAL ROOM</span>
+        <span class="small">ラブホテル・レンタルルーム</span>
+        <span class="count" id="loveCount">18件</span>
+      </div>
+      <div class="rule"></div>
+      <p class="section-note">秋葉原のラブホテル・レンタルルームは、昭和通り改札口側の神田佐久間町エリアに集中しています。</p>
+    </div>
+    <div id="loveList"></div>
+  </section>
+
+  <section id="bizSection">
+    <div class="section-head">
+      <div class="kicker">
+        <span class="big">BUSINESS HOTEL</span>
+        <span class="small">ビジネスホテル系</span>
+        <span class="count" id="bizCount">25件</span>
+      </div>
+      <div class="rule"></div>
+    </div>
+    <div id="bizList"></div>
+  </section>
+
+  <p class="empty" id="emptyMsg">該当する施設が見つかりませんでした。検索語や絞り込みを変えてお試しください。</p>
+</main>
+
+<footer class="wrap">
+  <div class="disclaimer">
+    掲載データは 2026年9月時点でウェブ公開情報をもとに作成した参考情報です。料金・営業状況は変更される場合があります。ご来店・ご宿泊前に必ず各施設の公式サイトまたはお電話でご確認ください。ビジネスホテルの宿泊料金は曜日・シーズンで変動が大きいため、あくまで目安の価格帯です。
+  </div>
+  <h4>主な参照元</h4>
+  <ul>
+    <li><a href="https://clover.minden.jp/iidabashi_love_hotel/" target="_blank" rel="noopener">Clover「飯田橋唯一のラブホはホテルゆたか」</a></li>
+    <li><a href="https://best-pair.com/lovehotel/suidoubashi" target="_blank" rel="noopener">best-pair「水道橋周辺のラブホテルおすすめ11選」</a></li>
+    <li><a href="https://pathee.com/region/tokyo/kanda/lovehotel.html" target="_blank" rel="noopener">Pathee「神田駅周辺のラブホテル・レンタルルームまとめ」</a></li>
+    <li><a href="https://plaisir-hotel.com" target="_blank" rel="noopener">ホテルプレジール 公式サイト</a></li>
+    <li><a href="http://le-tour-hotel.com" target="_blank" rel="noopener">楽途（ラトゥア）ホテル 公式サイト</a></li>
+    <li><a href="http://toujours-hotel.com" target="_blank" rel="noopener">トゥージュール 公式サイト</a></li>
+    <li><a href="https://www.mapion.co.jp/phonebook/M05002/13101/ST22507/" target="_blank" rel="noopener">マピオン電話帳 飯田橋駅周辺ビジネスホテル一覧</a></li>
+    <li><a href="https://www.mapion.co.jp/phonebook/M05002/13105/ST22758/" target="_blank" rel="noopener">マピオン電話帳 水道橋駅周辺ビジネスホテル一覧</a></li>
+    <li><a href="https://www.mapion.co.jp/phonebook/M05002/13101/ST22492/" target="_blank" rel="noopener">マピオン電話帳 秋葉原駅周辺ビジネスホテル一覧</a></li>
+    <li><a href="https://www.mapion.co.jp/phonebook/M05002/13101/ST22617/" target="_blank" rel="noopener">マピオン電話帳 神田駅周辺ビジネスホテル一覧</a></li>
+  </ul>
+  <p>本ページは実在する店舗の営業情報を紹介する非公式のまとめページです。特定の施設・企業を運営するものではありません。</p>
+</footer>
+
+<script>
+(function(){
+  const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+  const mapsUrl = addr => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(addr);
+  const UNPRICED = "公式サイト等でご確認ください";
+  const NOTEL = "非公開";
+
+  const love = [
+    {area:"飯田橋", kind:"love", name:"ホテルゆたか", addr:"東京都新宿区津久戸町3-1", tel:"03-3260-1336", exit:"飯田橋駅 B3出口", min:3, rest:"6,830〜7,850円(2時間)", stay:"10,500〜15,950円", note:"神楽坂で50年以上続く、飯田橋エリア唯一のラブホテル。日曜・祝日30%引き"},
+    {area:"水道橋", kind:"love", name:"PRINCESS1世", addr:"東京都文京区湯島3-47-8", tel:"03-3834-7780", exit:"水道橋駅（隣接：地下鉄 湯島駅）", min:20, rest:"4,900〜13,800円", stay:"9,800〜23,800円", note:"水道橋駅からは徒歩約20分。最寄りは地下鉄湯島駅です"},
+    {area:"水道橋", kind:"love", name:"HOTEL MANDARIN", addr:"東京都文京区本郷1-33-7", tel:"03-3815-8791", exit:"水道橋駅（隣接：本郷三丁目駅）", min:15, rest:"4,900〜7,000円(3時間)", stay:"8,000〜10,800円", note:"水道橋駅からは徒歩約15分。最寄りは本郷三丁目駅です"},
+    {area:"神田", kind:"rental", name:"神田レンタルルーム モア", addr:"東京都千代田区鍛冶町2-7-2 神田駅前ビル7F", tel:"03-3525-8082", exit:"神田駅 東口・北口", min:1,
+      rates:[{label:"30分", price:"1,000円"},{label:"45分", price:"1,500円"},{label:"60分", price:"2,000円"},{label:"90分", price:"2,500円"},{label:"120分", price:"3,000円"},{label:"150分", price:"3,500円"},{label:"180分", price:"4,000円"},{label:"延長30分", price:"1,000円"}],
+      note:"早朝・夜間はパック料金（休憩パック3,000円〜、ナイトパック3,000〜5,000円前後）がある場合あり（要確認）"},
+    {area:"神田", kind:"rental", name:"レンタルルームコスモス 神田店", addr:"東京都千代田区内神田3-6-13 星野神田西口ビル2F", tel:"03-6206-8037", exit:"神田駅 西口", min:3,
+      rates:[{label:"60分", price:"2,500円"},{label:"90分", price:"3,000円"},{label:"120分", price:"3,500円"},{label:"延長30分", price:"1,500円"},{label:"ナイトパック(23:00〜翌10:00・10h)", price:"5,000円"}],
+      note:"レンタルルーム"},
+    {area:"神田", kind:"rental", name:"神田レンタルルーム ファイブ・ウィンド", addr:"東京都千代田区鍛冶町1-7-17 三新鍛冶町ビル2F", tel:"03-6206-0477", exit:"神田駅 南口", min:1,
+      rates:[{label:"ショート(60〜90分)", price:"2,000〜4,000円前後"},{label:"ロング/フリータイム(2〜3時間〜)", price:"4,000〜6,000円前後"},{label:"延長30分", price:"1,000円前後"}],
+      note:"完全個室・鍵付き（5部屋構成、1階はバー）。料金は周辺相場を踏まえた目安のため、正確な金額は店舗へ直接ご確認ください"},
+    {area:"神田", kind:"rental", name:"レンタルルームEGON", addr:"東京都千代田区鍛冶町2-5-9 国泰神田ビル402", tel:"03-5298-2084", exit:"神田駅", min:2,
+      rates:[{label:"30分", price:"1,000円"},{label:"45分", price:"1,500円"},{label:"60分", price:"2,000円"},{label:"90分", price:"2,500円"},{label:"120分", price:"3,000円"},{label:"延長30分", price:"1,000円"}],
+      note:"シャワールーム・Wi-Fi完備"},
+    {area:"神田", kind:"rental", name:"格安レンタルルーム Anda", addr:"東京都千代田区鍛冶町2-8-10 大野ビル3F", tel:"03-5256-2388", exit:"神田駅 東口", min:2,
+      rates:[{label:"60分", price:"2,500円"},{label:"90分", price:"3,000円"},{label:"120分", price:"3,500円"},{label:"150分", price:"4,000円"},{label:"ナイトパック(22:00〜翌10:00)", price:"4,000円"},{label:"延長20分", price:"1,000円"}],
+      note:"レンタルルーム"},
+    {area:"神田", kind:"rental", name:"神田レンタルルーム TIARA", addr:"東京都千代田区内神田3-9-8 神栄ビルB1", tel:"03-3525-4183", exit:"神田駅", min:3,
+      rates:[{label:"60分", price:"2,500円"},{label:"90分", price:"3,000円"},{label:"120分", price:"3,500円"},{label:"延長30分", price:"1,500円"},{label:"ナイトパック(22:00〜翌10:00・12h)", price:"6,000円"}],
+      note:"レンタルルーム"},
+    {area:"神田", kind:"rental", name:"神田レンタルルーム MOND（モンド）", addr:"住所非公開（公式サイト等でご確認ください）", tel:NOTEL, exit:"神田駅周辺", min:null, mapQuery:"神田レンタルルーム MOND 神田",
+      rates:[{label:"45分", price:"2,500円"},{label:"60分", price:"3,000円"},{label:"90分", price:"3,700円"},{label:"120分", price:"4,300円"},{label:"150分", price:"5,000円"},{label:"180分", price:"6,000円"},{label:"ナイトパック(12h)", price:"7,500円"}],
+      note:"レンタルルーム。住所・電話番号は未確認のため公式サイト等でご確認ください"},
+    {area:"神田", kind:"rental", name:"レンタルルーム キューティ", addr:"住所非公開（公式サイト等でご確認ください）", tel:NOTEL, exit:"神田駅周辺", min:null, mapQuery:"レンタルルーム キューティ 神田",
+      rates:[{label:"60分", price:"2,000円"},{label:"90分", price:"2,500円"}],
+      note:"レンタルルーム。住所・電話番号は未確認のため公式サイト等でご確認ください"},
+    {area:"神田", kind:"rental", name:"レンタルルーム スカイ", addr:"住所非公開（公式サイト等でご確認ください）", tel:NOTEL, exit:"神田駅周辺", min:null, mapQuery:"レンタルルーム スカイ 神田",
+      rates:[{label:"30分", price:"1,000円"},{label:"45分", price:"1,500円"},{label:"60分", price:"2,000円"},{label:"90分", price:"2,500円"},{label:"120分", price:"3,000円"},{label:"150分", price:"3,500円"},{label:"延長30分", price:"1,000円"}],
+      note:"レンタルルーム。住所・電話番号は未確認のため公式サイト等でご確認ください"},
+    {area:"神田", kind:"rental", name:"レンタルルーム レインボー（Rainbow）", addr:"住所非公開（公式サイト等でご確認ください）", tel:NOTEL, exit:"神田駅周辺", min:null, mapQuery:"レンタルルーム レインボー 神田",
+      rates:[{label:"45分", price:"1,500円"},{label:"60分", price:"2,000円"},{label:"90分", price:"2,500円"},{label:"120分", price:"3,000円"},{label:"150分", price:"3,500円"},{label:"延長15分", price:"500円"}],
+      note:"レンタルルーム。住所・電話番号は未確認のため公式サイト等でご確認ください"},
+    {area:"神田", kind:"rental", name:"神田レンタルルーム", addr:"住所非公開（公式サイト等でご確認ください）", tel:NOTEL, exit:"神田駅周辺", min:null, mapQuery:"神田 レンタルルーム",
+      rates:[{label:"Aタイプ 45〜60分", price:"2,500〜3,000円"},{label:"Bタイプ 45〜300分", price:"2,700〜8,900円"},{label:"Cタイプ 90〜300分", price:"4,000〜9,900円"}],
+      note:"料金タイプが複数あります（A/B/Cタイプ、全日13:00〜23:00）。住所・電話番号・店舗名の詳細は未確認のため公式サイト等でご確認ください"},
+
+    {area:"秋葉原", kind:"love", name:"ホテルプレジール", addr:"東京都千代田区神田佐久間町3-29-9", tel:"03-5809-2691", exit:"秋葉原駅 昭和通り改札口", min:4,
+      rates:[{label:"120分", price:"4,000円"},{label:"180分", price:"6,000円"},{label:"240分", price:"7,500円"}],
+      note:"全14部屋・24時間営業（2021年8月open）。クレジットカード利用不可"},
+    {area:"秋葉原", kind:"love", name:"楽途（ラトゥア）ホテル", addr:"東京都千代田区神田佐久間町3-37-42", tel:"03-3865-6789", exit:"秋葉原駅 昭和通り改札口", min:4,
+      rates:[{label:"90分", price:"3,600円"},{label:"120分", price:"4,200円"},{label:"150分", price:"5,000円"},{label:"180分", price:"6,000円"}],
+      note:"全22部屋（2019年6月open）。休憩11:00〜23:00。クレジットカード利用不可。週末夕方以降は満室傾向あり"},
+    {area:"秋葉原", kind:"love", name:"トゥージュール", addr:"東京都千代田区神田佐久間町2-13-33", tel:"03-5829-9755", exit:"秋葉原駅 昭和通り改札口", min:1,
+      rates:[{label:"60分", price:"2,500円"},{label:"90分", price:"3,000円〜"},{label:"120分", price:"3,500円〜"}],
+      note:"全13部屋（スタンダード／プレミアム）。フリータイム（最大13時間）あり。電話予約不可・クレジットカード利用不可"},
+    {area:"秋葉原", kind:"rental", name:"レンタルルーム MK（元メロディー）", addr:"東京都千代田区神田佐久間町1-25 K.Tビル8F", tel:"03-3525-4580", exit:"秋葉原駅 昭和通り改札口", min:1,
+      rates:[{label:"45分", price:"2,200円"},{label:"60分", price:"2,700円"},{label:"90分", price:"3,300円"},{label:"120分", price:"3,900円"},{label:"延長15分", price:"1,000円"}],
+      note:"旧名称：メロディー"},
+  ];
+
+  const biz = [
+    {area:"飯田橋", name:"アパホテル〈飯田橋駅前〉", addr:"東京都千代田区（飯田橋駅周辺）", tel:"0570-03-5511", exit:"飯田橋駅", min:4, stay:"7,500〜13,000円"},
+    {area:"飯田橋", name:"後楽ガーデンホテル", addr:"東京都文京区（飯田橋・後楽園エリア）", tel:"03-3816-6130", exit:"飯田橋駅", min:5, stay:"7,000〜12,000円"},
+    {area:"飯田橋", name:"アパホテル〈飯田橋駅南〉", addr:"東京都千代田区（飯田橋駅周辺）", tel:"0570-03-4811", exit:"飯田橋駅", min:5, stay:"8,000〜14,000円"},
+    {area:"飯田橋", name:"トグルホテル水道橋", addr:"東京都千代田区（飯田橋・水道橋エリア）", tel:NOTEL, exit:"飯田橋駅／水道橋駅", min:6, stay:"8,500〜16,000円"},
+    {area:"飯田橋", name:"ヴィアイン飯田橋後楽園", addr:"東京都文京区（飯田橋・後楽園エリア）", tel:"03-3235-5489", exit:"飯田橋駅", min:6, stay:"8,500〜15,000円"},
+    {area:"飯田橋", name:"フレックステイイン飯田橋", addr:"東京都千代田区（飯田橋駅周辺）", tel:"03-5261-1110", exit:"飯田橋駅", min:6, stay:"6,500〜12,000円", note2:"ウィークリー・中長期利用にも強い"},
+
+    {area:"水道橋", name:"ホテルサトー東京", addr:"東京都文京区本郷1-4-4", tel:"03-3815-1133", exit:"水道橋駅", min:1},
+    {area:"水道橋", name:"アパホテル〈水道橋駅前〉", addr:"東京都千代田区（水道橋駅周辺）", tel:"0570-03-3911", exit:"水道橋駅", min:3, stay:"7,500〜13,000円"},
+    {area:"水道橋", name:"ザ・ビー東京水道橋", addr:"東京都千代田区（水道橋駅周辺）", tel:"03-5840-8077", exit:"水道橋駅", min:3, stay:"8,000〜15,000円"},
+    {area:"水道橋", name:"KOKO HOTEL後楽園", addr:"東京都文京区（後楽園エリア）", tel:"03-5804-1011", exit:"水道橋駅", min:4, stay:"6,000〜11,000円"},
+    {area:"水道橋", name:"sequence SUIDOBASHI", addr:"東京都千代田区（水道橋駅周辺）", tel:"03-3222-3131", exit:"水道橋駅", min:4, stay:"9,500〜18,000円"},
+    {area:"水道橋", name:"リッチモンドホテル東京水道橋", addr:"東京都千代田区（水道橋駅周辺）", tel:"03-5803-2155", exit:"水道橋駅", min:4, stay:"10,000〜20,000円"},
+    {area:"水道橋", name:"東急ステイ水道橋", addr:"東京都文京区（水道橋駅周辺）", tel:"03-3293-0109", exit:"水道橋駅", min:5, stay:"9,000〜16,000円"},
+
+    {area:"秋葉原", name:"レム秋葉原", addr:"東京都千代田区外神田（秋葉原駅前）", tel:"03-3254-0606", exit:"秋葉原駅", min:1, stay:"11,000〜20,000円"},
+    {area:"秋葉原", name:"JR東日本ホテルメッツプレミア秋葉原", addr:"東京都千代田区外神田（秋葉原駅前）", tel:"03-5294-1011", exit:"秋葉原駅", min:2, stay:"12,000〜22,000円"},
+    {area:"秋葉原", name:"秋葉原ワシントンホテル", addr:"東京都千代田区外神田（秋葉原駅周辺）", tel:"03-3255-3311", exit:"秋葉原駅", min:2, stay:"10,000〜18,000円"},
+    {area:"秋葉原", name:"ホテルリソル秋葉原", addr:"東京都千代田区外神田（秋葉原駅周辺）", tel:"03-3258-9269", exit:"秋葉原駅", min:3, stay:"9,500〜17,000円"},
+    {area:"秋葉原", name:"スーパーホテルPremier秋葉原", addr:"東京都千代田区外神田（秋葉原駅周辺）", tel:"03-6671-9000", exit:"秋葉原駅", min:3, stay:"9,000〜16,000円"},
+    {area:"秋葉原", name:"アパホテル〈秋葉原駅前〉", addr:"東京都千代田区外神田（秋葉原駅前）", tel:"0570-02-7311", exit:"秋葉原駅", min:4, stay:"8,000〜14,000円"},
+
+    {area:"神田", name:"アパホテル〈神田駅前〉", addr:"東京都千代田区神田（神田駅前）", tel:"0570-02-7611", exit:"神田駅", min:3, stay:"7,500〜13,000円"},
+    {area:"神田", name:"ホテルリブマックス東京神田駅前", addr:"東京都千代田区神田（神田駅前）", tel:"03-5296-4100", exit:"神田駅", min:3, stay:"6,000〜11,000円"},
+    {area:"神田", name:"ホテルSUI神田 by ABEST", addr:"東京都千代田区神田（神田駅周辺）", tel:"03-3251-1118", exit:"神田駅", min:4, stay:"7,500〜13,000円"},
+    {area:"神田", name:"グランドセントラルホテル", addr:"東京都千代田区神田（神田駅周辺）", tel:"03-3256-3211", exit:"神田駅", min:4, stay:"6,000〜10,000円", note2:"老舗系・リーズナブル"},
+    {area:"神田", name:"相鉄フレッサイン東京神田", addr:"東京都千代田区神田（神田駅周辺）", tel:"03-6859-5203", exit:"神田駅", min:4, stay:"8,500〜15,000円"},
+    {area:"神田", name:"明神の湯 ドーミーインPREMIUM神田", addr:"東京都千代田区神田（神田駅周辺）", tel:"03-3256-5489", exit:"神田駅", min:5, stay:"11,000〜20,000円", note2:"サウナ・大浴場（天然温泉）付き"},
+  ];
+
+  function rateRow(label, price){
+    const isUnpriced = price === UNPRICED;
+    const shown = isUnpriced ? esc(price) : "¥" + esc(price);
+    return `<div class="rate-line"><span class="label">${label}</span><span class="price ${isUnpriced?'':'num'}">${shown}</span></div>`;
+  }
+
+  function telBlock(tel){
+    if (tel === NOTEL) {
+      return `<span class="icon-text">☎ 非公開</span><a class="tel-btn disabled" href="#">電話する</a>`;
+    }
+    return `<span class="icon-text">☎ <span class="num">${tel}</span></span><a class="tel-btn" href="tel:${tel}">電話する</a>`;
+  }
+
+  function loveCard(h){
+    const tagClass = h.kind === "rental" ? "rental" : "love";
+    const tagLabel = h.kind === "rental" ? "RENTAL ROOM" : "LOVE HOTEL";
+    return `<article class="card" data-cat="love" data-area="${h.area}" data-search="${esc(h.name+h.addr)}">
+      <div class="card-top">
+        <div class="card-main">
+          <div class="card-name-row"><span class="tag ${tagClass}">${tagLabel}</span><span class="tag area">${h.area}エリア</span><h3>${esc(h.name)}</h3></div>
+          <div class="meta-row">${telBlock(h.tel)}</div>
+          <div class="rate-box">
+            <div class="rate-head"><span>ご利用料金の目安</span></div>
+            ${h.rates ? h.rates.map(r=>rateRow(r.label, r.price)).join("") : rateRow("休憩", h.rest) + rateRow("宿泊", h.stay)}
+            <div class="rate-note">${h.note ? esc(h.note)+"。" : ""}最新料金は公式サイト等でご確認ください。</div>
+          </div>
+        </div>
+        <div class="card-access">
+          <div class="access-badge">◎ ${esc(h.exit)}${h.min!=null ? `<span class="min">徒歩約${h.min}分</span>` : ""}</div>
+          <div class="addr">${esc(h.addr)}</div>
+          <a class="maps-link" href="${mapsUrl(h.mapQuery || (h.addr + ' ' + h.name))}" target="_blank" rel="noopener">↗ Google Mapsで経路を確認</a>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  function bizCard(h){
+    return `<article class="card" data-cat="biz" data-area="${h.area}" data-search="${esc(h.name+h.addr)}">
+      <div class="card-top">
+        <div class="card-main">
+          <div class="card-name-row"><span class="tag biz">BUSINESS</span><span class="tag area">${h.area}エリア</span><h3>${esc(h.name)}</h3></div>
+          <div class="meta-row">${telBlock(h.tel)}</div>
+          <div class="rate-box">
+            <div class="rate-head"><span>ご利用料金の目安</span></div>
+            ${rateRow("宿泊", h.stay || UNPRICED)}
+            <div class="rate-note">${h.note2 ? esc(h.note2)+"。" : ""}料金は曜日・シーズンで変動するため、予約サイトでご確認ください。</div>
+          </div>
+        </div>
+        <div class="card-access">
+          <div class="access-badge">◎ ${esc(h.exit)}<span class="min">徒歩約${h.min}分</span></div>
+          <div class="addr">${esc(h.addr)}</div>
+          <a class="maps-link" href="${mapsUrl(h.name + ' ' + h.exit)}" target="_blank" rel="noopener">↗ Google Mapsで経路を確認</a>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  document.getElementById("loveList").innerHTML = love.map(loveCard).join("");
+  document.getElementById("bizList").innerHTML = biz.map(bizCard).join("");
+
+  const state = { cat:"all", area:"all", q:"" };
+  const loveSection = document.getElementById("loveSection");
+  const bizSection = document.getElementById("bizSection");
+  const emptyMsg = document.getElementById("emptyMsg");
+  const loveCount = document.getElementById("loveCount");
+  const bizCount = document.getElementById("bizCount");
+
+  function apply(){
+    let visible = 0, loveVisible = 0, bizVisible = 0;
+    document.querySelectorAll(".card").forEach(c=>{
+      const cat = c.dataset.cat, area = c.dataset.area, hay = c.dataset.search.toLowerCase();
+      const okCat = state.cat==="all" || state.cat===cat;
+      const okArea = state.area==="all" || state.area===area;
+      const okQ = !state.q || hay.includes(state.q);
+      const show = okCat && okArea && okQ;
+      c.style.display = show ? "" : "none";
+      if(show){ visible++; if(cat==="love") loveVisible++; else bizVisible++; }
+    });
+    loveSection.style.display = (state.cat==="all"||state.cat==="love") ? "" : "none";
+    bizSection.style.display = (state.cat==="all"||state.cat==="biz") ? "" : "none";
+    loveCount.textContent = loveVisible + "件";
+    bizCount.textContent = bizVisible + "件";
+    emptyMsg.style.display = visible===0 ? "block" : "none";
+  }
+
+  document.querySelectorAll(".tab").forEach(t=>{
+    t.addEventListener("click", ()=>{
+      document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected","false"));
+      t.setAttribute("aria-selected","true");
+      state.cat = t.dataset.cat;
+      apply();
+    });
+  });
+  document.querySelectorAll("#areaChips .chip").forEach(c=>{
+    c.addEventListener("click", ()=>{
+      document.querySelectorAll("#areaChips .chip").forEach(x=>x.setAttribute("aria-pressed","false"));
+      c.setAttribute("aria-pressed","true");
+      state.area = c.dataset.area;
+      apply();
+    });
+  });
+  document.getElementById("q").addEventListener("input", e=>{
+    state.q = e.target.value.trim().toLowerCase();
+    apply();
+  });
+
+  apply();
+})();
+</script>
+
+</body>
+</html>
